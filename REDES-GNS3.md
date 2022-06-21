@@ -20,6 +20,8 @@ Para acceder a la terminal de configuracion se utiliza el comando
 
         configure terminal
 
+        conf t
+
 Desde aqui, se puede acceder a las interfaces para poder configurarlas con el comando
 
         interface [NOMBRE DE LA INTERFAZ] [NUMERO DE LA INTERFAZ]
@@ -27,6 +29,9 @@ Ejemplos:
 
         interface fastethernet 0/0
         interface gigabitEthernet 1/0
+
+        int f0/0
+        int g1/0
 
 ---
 
@@ -37,13 +42,18 @@ Ejemplo:
 
         ip address 190.50.70.2 255.255.255.0
         ip address 10.10.10.1 255.0.0.0
+        
+        ip add 190.50.70.2 255.255.255.0
+        ip add 10.10.10.1 255.0.0.0
 
 ---
 Es necesario agrerar el siguiente comando para levantar la interfaz
 
         no shutdown
 
-Nos salimos de ambas terminales con ***exit***. Y como buena practica, es recomendado guardar cada cambio despues de hacerlo con el comando ***wr***.
+        no shut
+
+Nos salimos de ambas terminales con ***end***. Y como buena practica, es recomendado guardar cada cambio despues de hacerlo con el comando ***wr***. También es posible saltar de una interfaz a otra dentro de la terminal.
 
 En este momento, ya se pueden probar las conexiones directas. Usamos la terminal del dispositivo base e introducimos el siguiente comando:
 
@@ -69,4 +79,4 @@ Por ejemplo;
 Podremos verificar todas las rutas establecidas con el comando
 
         do show ip route static
-Para guardar y salir, se sigue la buena practica de ***exit*** y ***wr***.
+Para guardar y salir, se sigue la buena practica de ***end*** y ***wr***.
