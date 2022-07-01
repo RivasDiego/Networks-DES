@@ -81,8 +81,8 @@ Podremos verificar todas las rutas establecidas con el comando
         do show ip route static
 Para guardar y salir, se sigue la buena practica de ***end*** y ***wr***.
 
-## RIP
-Este algoritmo es configura las rutas de manera dinamica, lo que significa que la configuración es más sencilla y más rápida. Usaremos el siguiente comando para acceder a la terminal de configuración de las rutas rip del router (luego de acceder a la terminal de configuración general con *conf t*):
+## RIP || Protocolo de Información de Encaminamiento (Routing Information Protocol)
+Este algoritmo es configura las rutas de manera dinamica, lo que significa que la configuración es más sencilla y más rápida. Es de tipo vector distancia. Usaremos el siguiente comando para acceder a la terminal de configuración de las rutas rip del router (luego de acceder a la terminal de configuración general con *conf t*):
 
         router rip
 
@@ -125,3 +125,51 @@ Despues de configurar esta ultima parte guardamos y salimos con ***end*** y ***w
 En dado caso querramos confirmar las rutas rip configuradas (Luego de trabajar en al menos dos routers), accedemos a la terminal de configuracion y colocamos:
         
         do show ip route rip
+
+## OSPF || Abrir el camino más corto primero (Open Shortest Path First)
+
+Este protocolo, igual que el anterior, es dinamico, por lo que es mas sencillo de configurar. Ahora bien, a diferencia del protocolo RIP, este es de tipo link-state (O estado de enlace). Para que este tipo de protocolo, los router envian un paquete "Hello" cada cierto tiempo (Que puede ser determinado por el usuario) para revisar el estado de todos los enlaces. Este protocolo también establece un DR (Designated Router) que es el encargado de manejar la tabla de direcciones de area y un BDR (Backup Designated Router) que es quien toma el rol del DR si este llega a fallar.
+
+Antes de empezar con los comandos, es necesario entender el concepto de *Wildcard Mask*. Esta mascara es un identificador de la parte de red con la que se esta trabajando e indica al router el rango de la red que se va a utilizar en la tabla de direcciones en la tabla de enrutamiento. Para esto, **utilizamos el octeto 255.255.255.255 y le restamos la mascara o submascara** respectivamente. 
+
+        Wilcard con clases
+
+        255.255.255.255 -
+        255.255.255. 0  =    //Clase C
+        _________________
+         0 . 0 . 0 .255      // Esta es una wildcard de la clase C
+
+        Wilcard con VLSM
+        
+        255.255.255.255 -
+        255.255.248. 0  =    // Mascara variable
+        _________________
+         0 . 0 . 7 .255      // WILDCARD
+
+Manejando el concepto, podemos empezar con las configuraciones. Al igual que rip, accedemos a la configuracion especifica del protocolo
+
+        router ospf 1
+A cada router, se le asigna un id de router que se utilizara cuando se requiera informacion sobre el. Estos id siguen la nomenclatura *n.n.n.n*.
+        
+        router-id [n.n.n.n]
+
+        router-id 1.1.1.1
+        router-id 2.2.2.2  // OJO -> NO ES UNA IP
+
+Luego de asignar el id, procedemos a agregar las redes a las que el router esta conectado, como hicimos con RIP, pero ahora añadimos la wildcard de la red y un campo extra que es el area, que se puede definir el area como el grupo de trabajo al que pertenece el router. Esto nos permite establecer diferentes grupos de trabajo, facilitando y amplificando la organizacion del mismo.
+
+        network [IP DE RED] [WILDCARD] area [AREA]
+
+        network 190.50.70.0 0.0.0.255 area 0
+        network 10.10.10.0 255.255.255.0 area 0
+
+        net 190.50.70.0 0.0.0.255 area 0
+        net 10.10.10.0 255.255.255.0 area 0
+
+Siempre recordar salir y guardar con ***end*** y ***wr*** despues de terminal toda la configuracion.  
+Para revisar todas las conexiones, utilizamos
+
+        show ip ospf neighbor
+        show ip ospf neighbor database // Para ver la tabla de direcciones en ese router
+
+## NAT || Traducción de direcciones de red (Network Address Translation)
