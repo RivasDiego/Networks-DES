@@ -173,3 +173,70 @@ Para revisar todas las conexiones, utilizamos
         show ip ospf neighbor database // Para ver la tabla de direcciones en ese router
 
 ## NAT || Traducción de direcciones de red (Network Address Translation)
+
+Es un mecanismo utilizado por routers IP para cambiar paquetes entre dos redes que asignan mutuamente direcciones incompatibles. Consiste en convertir, en tiempo real, las direcciones utilizadas en los paquetes transportados. Exites tres tipos, estaticos, dinamicos y de sobrecarga.  
+
+La estatica es que a una direccion interna, privada, le asignamos una direccion publica. Las dinamicas es en las que tenemos direcciones tanto privadas como publicas y hacemos que las rutas publicas trabajen con privadas y las privadas con publicas si es necesario. Por ultimo tenemos la de sobrecarga, que es directamente poder tener muchas direcciones privadas en una red interna, y solo una direccion publica.
+
+![](https://i.imgur.com/fXk9B0k.png)
+
+![](https://i.imgur.com/SmYEGYT.png)
+
+Utilizaremos un nuevo componente del GNS3, el que esta indicado como NAT.   
+
+Accedemos a la configuracion del router que queremos establecer como traductor, accedemos a la interfaz conectada a la NAT y asignamos una ip. Esta IP viene dada por el DHCP.
+
+        config t
+
+        ip add dhcp
+
+        no shut
+
+Ahora  configuramos de la interfaz conectada a la subred y en la configuracion general establecemos el pool de direcciones
+
+        service dhcp
+
+        ip dhcp pool [NOMBRE]
+
+Luego se agrega la subnet
+
+        network [IP] [MASCARA]
+
+        network 192.60.24.0 255.255.255.0
+        net 192.60.24.0 255.255.255.0
+
+Se establece una ip fija
+
+        default-router [IP]
+
+        default-router 192.60.24.1
+
+Y se espedifica el servidor dns, usualmente usamos el *8.8.8.8*, pero si existe un DNS interno, ese es el que se utiliza
+
+        dns-server [Default DNS serever]
+
+        dns-server 8.8.8.8
+
+Cuando se tengan multiples subredes por las cuales el router puede establecer una conexion, es necesario establecer la interfaz de salida (La que se conecta directamente con NAT) y las de entrada (Las interfaces de las subredes). Esto se hace en la configuracion de cada interfaz en especifico
+
+        ip nat outside    // Para la de salida
+
+        ip nat inside     // Para las de entrada
+
+Tambien es necesario declarar las listas de acceso, cual es el rango de ip con las que podremos salir y con cuales no. Para esto, desde la configuracion general del router, escribimos
+
+        access-list [LISTA] permit ip [IP DE SUBRED] [WILDCARD] any
+
+        access-list 100 permit ip [190.50.70.0 0.0.0.255 any
+
+Y configuramos la sobrecarga del NAT
+
+        ip nat inside source list [LISTA] interface [INTERFAZ DE SALIDA] overload
+
+        ip nat inside source list 100 interface g1/0 overload
+
+Salimos y guardamos. Para comprobar si todo funciona, vamos a las PC. Y estas deberian ser capaces de establecer una IP sin asignarselas estaticas. Lo hacemos con el comando
+
+        ip dhcp
+
+Y hacemos ping al servidor del dns o internet.
