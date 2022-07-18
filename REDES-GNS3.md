@@ -164,7 +164,7 @@ Luego de asignar el id, procedemos a agregar las redes a las que el router esta 
         network 10.10.10.0 255.255.255.0 area 0
 
         net 190.50.70.0 0.0.0.255 area 0
-        net 10.10.10.0 255.255.255.0 area 0
+        net 10.10.10.0 0.255.255.255 area 0
 
 Siempre recordar salir y guardar con ***end*** y ***wr*** despues de terminal toda la configuracion.  
 Para revisar todas las conexiones, utilizamos
@@ -227,7 +227,7 @@ Tambien es necesario declarar las listas de acceso, cual es el rango de ip con l
 
         access-list [LISTA] permit ip [IP DE SUBRED] [WILDCARD] any
 
-        access-list 100 permit ip [190.50.70.0 0.0.0.255 any
+        access-list 100 permit ip [192.60.24.0 0.0.0.255 any
 
 Y configuramos la sobrecarga del NAT
 
