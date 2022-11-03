@@ -30,8 +30,36 @@ Muchos sistemas y administradores de red también la encuentran útil para tarea
 Al ejecutarse sobre una direccion IP que actua como host, **nmap** revela los puertos que estan abiertos, junto con los protocolos utilizados en dichos puertos.
 
     nmap    [Scan Type...]  {target specification} 
-            [Options] 
+            [Options]
 
+    TARGET SPECIFICATION:
+        -iL <inputfilename>: Input from list of hosts/networks
+        -iR <num hosts>: Choose random targets
+        --exclude <host1[,host2][,host3],...>: Exclude hosts/networks
+        --excludefile <exclude_file>: Exclude list from file
+    HOST DISCOVERY:
+        -sL: List Scan - simply list targets to scan
+        -sn: Ping Scan - disable port scan
+    PORT SPECIFICATION AND SCAN ORDER:
+        -sU: UDP Scan
+        -sN/sF/sX: TCP Null, FIN, and Xmas scans
+        -p <port ranges>: Only scan specified ports
+            Ex: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9
+    SERVICE/VERSION DETECTION:
+        -sV: Probe open ports to determine service/version info
+        --version-intensity <level>: Set from 0 (light) to 9 (try all probes)
+        --version-light: Limit to most likely probes (intensity 2)
+        --version-all: Try every single probe (intensity 9)
+        --version-trace: Show detailed version scan activity (for debugging)
+    OS DETECTION:
+        -O: Enable OS detection
+    OUTPUT:
+        -v: Increase verbosity level (use -vv or more for greater effect)
+        -d: Increase debugging level (use -dd or more for greater effect)
+        --reason: Display the reason a port is in a particular state
+        --open: Only show open (or possibly open) ports
+
+## Spiderfoot
 ## Wireshark
 ## Hydra
 ## John
