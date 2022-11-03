@@ -100,6 +100,35 @@ La inteligencia de fuentes abiertas (open-source intelligence, o su acrónimo OS
 
 La opción **_-l_** es requerida para establecer un puerto inicial en donde las herramientas serán utilizadas. Pero también cuenta con una interfaz gráfica que se puede acceder desde el puerto en inicial.
 
+## Social Engineer Toolkit (SET)
+Social Engineering Toolkit, está diseñado para realizar penetraciones por el lado de humanos, implementando ingeniería social como principal herramienta. Es desarrollado en Python por el fundador de [TrustedSec](https://www.trustedsec.com/social-engineer-toolkit-set/) y también es un proyecto de código abierto.
+
+Para utilziarlo, es necesario permisos de **root**:  
+
+        setoolkit       // Iniciar menu principal
+De este menú se pueden ejecutar diferentes vectores de ataque
+
+        1) Social-Engineering Attacks
+        2) Penetration Testing (Fast-Track)
+        3) Third Party Modules
+        4) Update the Social-Engineer Toolkit
+        5) Update SET configuration
+        6) Help, Credits, and About
+        --------------------------- 
+        // Se selecciona la opcion 1
+        Select from the menu:
+
+        1) Spear-Phishing Attack Vectors
+        2) Website Attack Vectors
+        3) Infectious Media Generator
+        4) Create a Payload and Listener
+        5) Mass Mailer Attack
+        6) Arduino-Based Attack Vector
+        7) Wireless Access Point Attack Vector
+        8) QRCode Generator Attack Vector
+        9) Powershell Attack Vectors
+       10) Third Party Modules
+
 ## Wireshark
 ## Hydra
 ## John
