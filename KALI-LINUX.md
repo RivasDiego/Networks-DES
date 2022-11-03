@@ -128,7 +128,7 @@ De este menú se pueden ejecutar diferentes vectores de ataque
         8) QRCode Generator Attack Vector
         9) Powershell Attack Vectors
        10) Third Party Modules
-## Metaslpoit
+## Metasploit
 ## Burpsuite
 ## MAC Spoofing
 ## Wireshark
